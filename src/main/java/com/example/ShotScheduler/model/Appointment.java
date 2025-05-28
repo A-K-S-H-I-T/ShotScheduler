@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 
 import java.util.Date;
@@ -23,6 +24,10 @@ public class Appointment {
 
     @Column(nullable = false)
     private String appointmentId;
+
+    @Column(nullable = false)
+    @CreationTimestamp
+    private Date createdAt;
 
     @Column(nullable = false)
     private Date appointmentDate;
