@@ -22,8 +22,8 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
-    private String appointmentId;
+//    @Column(nullable = false)
+//    private String appointmentId;
 
     @Column(nullable = false)
     @CreationTimestamp
@@ -34,5 +34,13 @@ public class Appointment {
 
     @Column(nullable = false)
     private AppointmentStatus appointmentStatus;
+
+    @ManyToOne //many appoint with same doctors
+    @JoinColumn
+    Doctor doctor;
+
+    @ManyToOne //many appointment for 1 patient (case: 2 or more dose)
+    @JoinColumn
+    Patient patient;
 
 }

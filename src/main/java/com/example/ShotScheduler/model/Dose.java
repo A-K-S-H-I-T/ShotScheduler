@@ -34,4 +34,8 @@ public class Dose {
     @CreationTimestamp
     private Date dateOfVaccination;
 
+    @ManyToOne  //patient -> many dose
+    @JoinColumn //create foreign key column -> patient - id
+    Patient patient;
+
 }
