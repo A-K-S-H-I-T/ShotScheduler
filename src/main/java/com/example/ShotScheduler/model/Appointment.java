@@ -39,7 +39,7 @@ public class Appointment {
     @JoinColumn
     Doctor doctor;
 
-    @ManyToOne //many appointment for 1 patient (case: 2 or more dose)
+    @OneToOne //many appointment for 1 patient (case: 2 or more dose)
     @JoinColumn
     Patient patient;
 

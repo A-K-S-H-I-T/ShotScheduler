@@ -34,6 +34,9 @@ public class Patient {
     @Column(nullable = false)
     private Gender gender;
 
+    @Column(nullable = false)
+    private boolean isVaccinated;
+
     private Date dateOfBirth;
 
     private String mobileNumber;
