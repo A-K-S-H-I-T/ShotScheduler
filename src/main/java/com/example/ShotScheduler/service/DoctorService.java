@@ -27,4 +27,9 @@ public class DoctorService {
             return doctor.get();
         }
     }
+
+    public String deleteDoctor(int id) {
+        doctorRepository.deleteById(id);
+        return "Doctor has been deleted";
+    }
 }

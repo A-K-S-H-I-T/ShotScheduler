@@ -4,6 +4,8 @@ import com.example.ShotScheduler.exception.PatientNotFoundException;
 import com.example.ShotScheduler.model.Patient;
 import com.example.ShotScheduler.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,8 +16,14 @@ public class PatientController {
     PatientService patientService;
 
     @PostMapping("/add")
-    public Patient addPatient(@RequestBody Patient patient) {
-        return patientService.addPatient(patient);
+    public ResponseEntity<String> addPatient(@RequestBody Patient patient) {
+        try{
+            patientService.addPatient(patient);
+            return new ResponseEntity<>("Patient Added Successfully", HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @GetMapping("/get")

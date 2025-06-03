@@ -23,4 +23,9 @@ public class DoctorController {
         return doctorService.getDoctor(id);
     }
 
+    @DeleteMapping("/delete")
+    public String deleteDoctor(@RequestParam("id") int id) throws DoctorNotFoundException {
+        return doctorService.deleteDoctor(id);
+    }
+
 }

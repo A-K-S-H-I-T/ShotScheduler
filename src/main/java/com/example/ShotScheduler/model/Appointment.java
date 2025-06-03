@@ -22,14 +22,15 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @Column(nullable = false)
-//    private String appointmentId;
+    @Column(nullable = false)
+    private String appointmentId;
 
     @Column(nullable = false)
     @CreationTimestamp
     private Date createdAt;
 
     @Column(nullable = false)
+    @CreationTimestamp
     private Date appointmentDate;
 
     @Column(nullable = false)
