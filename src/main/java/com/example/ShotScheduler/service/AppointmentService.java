@@ -1,6 +1,8 @@
 package com.example.ShotScheduler.service;
 
 import com.example.ShotScheduler.Enum.AppointmentStatus;
+import com.example.ShotScheduler.dto.response.AppointmentResponse;
+import com.example.ShotScheduler.dto.response.PatientResponse;
 import com.example.ShotScheduler.exception.DoctorNotFoundException;
 import com.example.ShotScheduler.exception.PatientNotFoundException;
 import com.example.ShotScheduler.model.Appointment;
@@ -22,7 +24,7 @@ public class AppointmentService {
     @Autowired private PatientRepository patientRepository;
     @Autowired private DoctorRepository doctorRepository;
 
-    public Appointment bookAppointment(int patientId, int doctorId) throws PatientNotFoundException, DoctorNotFoundException {
+    public AppointmentResponse bookAppointment(int patientId, int doctorId) throws PatientNotFoundException, DoctorNotFoundException {
         Optional<Patient> patient = patientRepository.findById(patientId);
         if(patient.isEmpty()){
             throw new PatientNotFoundException("Invalid patient Id!");
@@ -40,6 +42,21 @@ public class AppointmentService {
         appointment.setAppointmentStatus(AppointmentStatus.BOOKED);
         appointment.setDoctor(doc);
         appointment.setPatient(patience);
-        return appointmentRepository.save(appointment);
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+        AppointmentResponse appointmentResponse = new AppointmentResponse();
+        appointmentResponse.setAppointmentId(savedAppointment.getAppointmentId());
+        appointmentResponse.setAppointmentStatus(savedAppointment.getAppointmentStatus());
+        appointmentResponse.setAppointmentDate(savedAppointment.getAppointmentDate());
+        appointmentResponse.setDoctorName(savedAppointment.getDoctor().getName());
+
+        Patient savedPatient = savedAppointment.getPatient();
+        PatientResponse patientResponse = new PatientResponse();
+        patientResponse.setFirstName(savedPatient.getFirstName());
+        patientResponse.setLastName(savedPatient.getLastName());
+        patientResponse.setEmail(savedPatient.getEmail());
+        patientResponse.setVaccinated(savedPatient.isVaccinated());
+        appointmentResponse.setPatientResponse(patientResponse);
+
+        return appointmentResponse;
     }
 }

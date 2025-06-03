@@ -1,5 +1,7 @@
 package com.example.ShotScheduler.controller;
 
+import com.example.ShotScheduler.dto.request.PatientRequest;
+import com.example.ShotScheduler.dto.response.PatientResponse;
 import com.example.ShotScheduler.exception.PatientNotFoundException;
 import com.example.ShotScheduler.model.Patient;
 import com.example.ShotScheduler.service.PatientService;
@@ -16,10 +18,10 @@ public class PatientController {
     PatientService patientService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addPatient(@RequestBody Patient patient) {
+    public ResponseEntity<Object> addPatient(@RequestBody PatientRequest patientRequest) {
         try{
-            patientService.addPatient(patient);
-            return new ResponseEntity<>("Patient Added Successfully", HttpStatus.CREATED);
+            PatientResponse patientResponse = patientService.addPatient(patientRequest);
+            return new ResponseEntity<>(patientResponse, HttpStatus.CREATED);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
@@ -27,7 +29,7 @@ public class PatientController {
     }
 
     @GetMapping("/get")
-    public Patient getPatient(@RequestParam("id") int id) throws PatientNotFoundException {
+    public PatientResponse getPatient(@RequestParam("id") int id) throws PatientNotFoundException {
         return patientService.getPatient(id);
     }
 

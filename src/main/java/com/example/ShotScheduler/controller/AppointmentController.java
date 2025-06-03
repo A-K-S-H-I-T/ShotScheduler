@@ -1,5 +1,6 @@
 package com.example.ShotScheduler.controller;
 
+import com.example.ShotScheduler.dto.response.AppointmentResponse;
 import com.example.ShotScheduler.exception.DoctorNotFoundException;
 import com.example.ShotScheduler.exception.PatientNotFoundException;
 import com.example.ShotScheduler.model.Appointment;
@@ -23,7 +24,7 @@ public class AppointmentController {
     @PostMapping("/book")
     public ResponseEntity<Object> bookAppointment(@RequestParam("pid") int patientId, @RequestParam("did") int doctorId) throws PatientNotFoundException, DoctorNotFoundException {
         try{
-            Appointment bookedAppointment = appointmentService.bookAppointment(patientId, doctorId);
+            AppointmentResponse bookedAppointment = appointmentService.bookAppointment(patientId, doctorId);
             return new ResponseEntity<>(bookedAppointment, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
